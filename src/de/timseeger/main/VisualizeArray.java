@@ -10,19 +10,12 @@ import java.util.Random;
 public class VisualizeArray extends JPanel {
     private static Thread sortingThread;
     public static boolean isRunning;
+
     private int[] randomArray;
     private int LENGTH = 100;
     private float[] BAR_HEIGHT = new float[LENGTH];
+
     private int current_index, traversing_index;
-
-    public int getLength(){
-        return LENGTH;
-    }
-
-    public int getValue(int index){
-        return randomArray[index];
-    }
-
 
     public VisualizeArray(){
         setBackground(Color.BLACK);
@@ -101,5 +94,13 @@ public class VisualizeArray extends JPanel {
             }
             sortingThread.start();
         }
+    }
+
+    public int getLength(){
+        return LENGTH;
+    }
+
+    public int getValue(int index){
+        return randomArray[index];
     }
 }

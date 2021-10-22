@@ -4,17 +4,22 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class MainMenu extends JFrame{
     public static int WINDOW_WIDTH = 1280;
     public static int WINDOW_HEIGHT = 720;
-    public static MainMenu menu;
+    public static int THREAD_SLEEP_SPEED = 5;
+
+    public static int accesses,comparisons;
+
     public VisualizeArray visualizeArray;
     public JPanel menuPanel;
     public JComboBox<String> sortSelect;
     public JButton startSort;
     public JSlider arraySlider, speedSlider;
-    public int SPEED = 10;
+    public static JLabel SizeOfArray, SpeedOfThread, specificsOfAlgo;
 
     public MainMenu(){
         super("Sorting Algorithm Visualizer");
@@ -24,41 +29,52 @@ public class MainMenu extends JFrame{
 
         visualizeArray = new VisualizeArray();
         menuPanel = new JPanel();
-        initializeMenu();
 
+        initializeMenu();
 
         add(visualizeArray, BorderLayout.CENTER);
         add(menuPanel, BorderLayout.AFTER_LAST_LINE);
+
         visualizeArray.repaint();
         setVisible(true);
     }
 
     private void initializeMenu() {
+        SizeOfArray = new JLabel("Array size");
+
         arraySlider = new JSlider(25, 1000, 100);
         arraySlider.setMajorTickSpacing(100);
         arraySlider.setPaintTicks(true);
-        menuPanel.add(arraySlider);
         arraySlider.addChangeListener(e -> visualizeArray.changeArrayLength(arraySlider.getValue()));
 
-        speedSlider = new JSlider(1, 100, 5);
-        speedSlider.setMajorTickSpacing(5);
+        SpeedOfThread = new JLabel("Speed of algorithm");
+
+        speedSlider = new JSlider(1, 10, 5);
+        speedSlider.setInverted(true);
+        speedSlider.setMajorTickSpacing(1);
         speedSlider.setPaintTicks(true);
-        menuPanel.add(speedSlider);
-        speedSlider.addChangeListener(e -> SPEED = speedSlider.getValue());
+        speedSlider.addChangeListener(e -> {if(!VisualizeArray.isRunning)THREAD_SLEEP_SPEED = speedSlider.getValue();});
+        speedSlider.addChangeListener(e ->  specificsOfAlgo.setText(accesses + " accesses, " + comparisons +" comparisons, " + THREAD_SLEEP_SPEED + " ms delay"));
 
         sortSelect = new JComboBox<>();
         sortSelect.addItem("BubbleSort");
-        menuPanel.add(sortSelect);
 
         startSort = new JButton("Start");
-        startSort.addActionListener(e -> VisualizeArray.startSort("BubbleSort", visualizeArray, SPEED));
+        startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
+
+        specificsOfAlgo = new JLabel(accesses + " accesses, " + comparisons +" comparisons, " + THREAD_SLEEP_SPEED + " ms delay");
+
+        menuPanel.add(SizeOfArray);
+        menuPanel.add(arraySlider);
+        menuPanel.add(SpeedOfThread);
+        menuPanel.add(speedSlider);
+        menuPanel.add(sortSelect);
         menuPanel.add(startSort);
-
-
+        menuPanel.add(specificsOfAlgo);
     }
 
     public static void main(String[] args) {
-        menu = new MainMenu();
+        new MainMenu();
     }
 
 }
