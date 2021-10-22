@@ -1,5 +1,5 @@
 # SortingAlgorithmVisualizer
-This program showcases different kinds of Sorting Algorithms.
+This program showcases and visualizes different kinds of Sorting Algorithms.
 <br>Currently features:
 - Bubble Sort
 
