@@ -1,11 +1,7 @@
 package de.timseeger.main;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class MainMenu extends JFrame{
     public static int WINDOW_WIDTH = 1280;

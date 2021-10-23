@@ -1,6 +1,7 @@
 package de.timseeger.main;
 
 import de.timseeger.algorithms.BubbleSort;
+import de.timseeger.algorithms.QuickSort;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ public class VisualizeArray extends JPanel {
     public static boolean isRunning;
 
     private int[] randomArray;
-    private int LENGTH = 100;
+    private static int LENGTH = 100;
     private float[] BAR_HEIGHT = new float[LENGTH];
 
     private int current_index, traversing_index;
@@ -91,6 +92,10 @@ public class VisualizeArray extends JPanel {
                     sortingThread = new Thread(new BubbleSort(visualizeArray, speed));
                     isRunning = true;
                     break;
+//                case ("QuickSort"):
+//                    sortingThread = new Thread(new QuickSort(visualizeArray, speed));
+//                    isRunning = true;
+//                    break;
             }
             sortingThread.start();
         }
