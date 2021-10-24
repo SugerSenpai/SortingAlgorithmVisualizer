@@ -18,4 +18,8 @@ public class Sound {
         Thread.sleep(duration);
         channels.noteOff(note);
     }
+
+    public static double getMidiConvertRate(VisualizeArray visualizeArray){
+        return (double) 65/visualizeArray.getLength();
+    }
 }

@@ -5,8 +5,9 @@ import de.timseeger.main.Sound;
 import de.timseeger.main.VisualizeArray;
 
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
+
+import static de.timseeger.main.Sound.getMidiConvertRate;
 
 
 public class QuickSort implements Runnable{
@@ -44,7 +45,7 @@ public class QuickSort implements Runnable{
         VisualizeArray.isRunning = true;
         int pivotVal = visualizeArray.getValue(high);
         int i = low -1;
-        double convertMidiRate = (double) 65/visualizeArray.getLength();
+        double convertMidiRate = getMidiConvertRate(visualizeArray);
         for(int j = low; j <= high-1;j++){
             MainMenu.accesses++;
             MainMenu.specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");

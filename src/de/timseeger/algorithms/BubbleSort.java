@@ -7,6 +7,8 @@ import de.timseeger.main.VisualizeArray;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
+import static de.timseeger.main.Sound.getMidiConvertRate;
+
 
 public class BubbleSort implements Runnable{
     VisualizeArray visualizeArray;
@@ -24,7 +26,7 @@ public class BubbleSort implements Runnable{
             Synthesizer synth = MidiSystem.getSynthesizer();
             synth.open();
             Sound.getChannels(synth);
-            double convertMidiRate = (double) 65/visualizeArray.getLength();
+            double convertMidiRate = getMidiConvertRate(visualizeArray);
             int length = visualizeArray.getLength();
             for (int i = 0; i < length - 1; i++) {
                 for (int j = 0; j < length - i - 1; j++) {
