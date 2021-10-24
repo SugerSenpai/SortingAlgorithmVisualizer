@@ -54,8 +54,10 @@ public class MainMenu extends JFrame{
 
         sortSelect = new JComboBox<>();
         sortSelect.addItem("BubbleSort");
+        sortSelect.addItem("QuickSort");
 
         startSort = new JButton("Start");
+        startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
         startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
 
         specificsOfAlgo = new JLabel(accesses + " accesses, " + comparisons +" comparisons, " + THREAD_SLEEP_SPEED + " ms delay");

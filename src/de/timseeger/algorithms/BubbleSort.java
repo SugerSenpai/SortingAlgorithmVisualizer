@@ -17,14 +17,14 @@ public class BubbleSort implements Runnable{
         this.speed = speed;
     }
 
-    public void runSort()  {
+    private void runSort()  {
         try {
             MainMenu.accesses = 0;
             MainMenu.comparisons = 0;
             Synthesizer synth = MidiSystem.getSynthesizer();
             synth.open();
             Sound.getChannels(synth);
-            double convertMidiRate = (double) 70/visualizeArray.getLength();
+            double convertMidiRate = (double) 65/visualizeArray.getLength();
             int length = visualizeArray.getLength();
             for (int i = 0; i < length - 1; i++) {
                 for (int j = 0; j < length - i - 1; j++) {

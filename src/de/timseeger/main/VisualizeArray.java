@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 public class VisualizeArray extends JPanel {
-    private static Thread sortingThread;
+    public static Thread sortingThread;
     public static boolean isRunning;
 
     private int[] randomArray;
@@ -53,7 +53,6 @@ public class VisualizeArray extends JPanel {
             bar = new Rectangle2D.Float(i*BAR_WIDTH, 0, BAR_WIDTH, BAR_HEIGHT[i]);
             graphics2D.fill(bar);
         }
-
         graphics2D.setColor(Color.RED);
         bar = new Rectangle2D.Float(current_index*BAR_WIDTH, 0, BAR_WIDTH, BAR_HEIGHT[current_index]);
         graphics2D.fill(bar);
@@ -61,6 +60,8 @@ public class VisualizeArray extends JPanel {
         graphics2D.setColor(Color.GREEN);
         bar = new Rectangle2D.Float(traversing_index*BAR_WIDTH, 0, BAR_WIDTH, BAR_HEIGHT[traversing_index]);
         graphics2D.fill(bar);
+        current_index = 0;
+        traversing_index = 0;
     }
 
 
@@ -88,14 +89,14 @@ public class VisualizeArray extends JPanel {
     public static void startSort(String algorithmName, VisualizeArray visualizeArray, int speed){
         if(!isRunning) {
             switch (algorithmName) {
-                case ("BubbleSort"):
+                case ("BubbleSort") -> {
                     sortingThread = new Thread(new BubbleSort(visualizeArray, speed));
                     isRunning = true;
-                    break;
-//                case ("QuickSort"):
-//                    sortingThread = new Thread(new QuickSort(visualizeArray, speed));
-//                    isRunning = true;
-//                    break;
+                }
+                case ("QuickSort") -> {
+                    sortingThread = new Thread(new QuickSort(visualizeArray, speed));
+                    isRunning = true;
+                }
             }
             sortingThread.start();
         }
