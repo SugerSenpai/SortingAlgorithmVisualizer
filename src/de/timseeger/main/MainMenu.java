@@ -83,6 +83,7 @@ public class MainMenu extends JFrame {
     }
 
     public static void updateComparisons() {
+        accesses++;
         comparisons++;
         specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
     }

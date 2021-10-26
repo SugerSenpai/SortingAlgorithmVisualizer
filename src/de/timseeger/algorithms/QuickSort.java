@@ -53,7 +53,6 @@ public class QuickSort implements Runnable {
             if (visualizeArray.getValue(j) <= pivotVal) {
                 Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
                 MainMenu.updateComparisons();
-                MainMenu.updateAccesses();
                 i++;
                 visualizeArray.swap(i, j);
                 Thread.sleep(speed);

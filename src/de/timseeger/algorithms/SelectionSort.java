@@ -46,7 +46,6 @@ public class SelectionSort implements Runnable {
                     Thread.sleep(speed);
                     if (visualizeArray.getValue(j) < visualizeArray.getValue(min)) {
                         Thread.sleep(speed);
-                        MainMenu.updateAccesses();
                         MainMenu.updateComparisons();
                         min = j;
                     }

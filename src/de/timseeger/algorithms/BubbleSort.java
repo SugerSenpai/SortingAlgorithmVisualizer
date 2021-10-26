@@ -39,7 +39,6 @@ public class BubbleSort implements Runnable {
                         Thread.sleep(speed);
                         Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
                         visualizeArray.swap(j, j + 1);
-                        MainMenu.updateAccesses();
                         MainMenu.updateComparisons();
                     }
                 }
