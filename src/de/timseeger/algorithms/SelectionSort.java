@@ -10,17 +10,25 @@ import javax.sound.midi.Synthesizer;
 
 import static de.timseeger.main.Sound.getMidiConvertRate;
 
-
-public class BubbleSort implements Runnable {
+public class SelectionSort implements Runnable {
     VisualizeArray visualizeArray;
     int speed;
 
-    public BubbleSort(VisualizeArray visualizeArray, int speed) {
+    public SelectionSort(VisualizeArray visualizeArray, int speed) {
         this.visualizeArray = visualizeArray;
         this.speed = speed;
     }
 
-    private void runSort() throws MidiUnavailableException, InterruptedException {
+    @Override
+    public void run() {
+        try {
+            runSort();
+        } catch (InterruptedException | MidiUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void runSort() throws InterruptedException, MidiUnavailableException {
             MainMenu.accesses = 0;
             MainMenu.comparisons = 0;
             Synthesizer synth = MidiSystem.getSynthesizer();
@@ -31,29 +39,24 @@ public class BubbleSort implements Runnable {
 
             for (int i = 0; i < length - 1; i++) {
                 Thread.sleep(speed);
+                int min = i;
                 MainMenu.updateAccesses();
-                for (int j = 0; j < length - i - 1; j++) {
-                    Thread.sleep(speed);
+                for (int j = i + 1; j < length; j++) {
                     MainMenu.updateAccesses();
-                    if (visualizeArray.getValue(j) > visualizeArray.getValue(j + 1)) {
+                    Thread.sleep(speed);
+                    if (visualizeArray.getValue(j) < visualizeArray.getValue(min)) {
                         Thread.sleep(speed);
-                        Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
-                        visualizeArray.swap(j, j + 1);
                         MainMenu.updateAccesses();
                         MainMenu.updateComparisons();
+                        min = j;
                     }
                 }
+                Thread.sleep(speed);
+                MainMenu.updateAccesses();
+                if (min != i)
+                    visualizeArray.swap(min, i);
+                Sound.play((int) (visualizeArray.getValue(min) * convertMidiRate), speed);
             }
         VisualizeArray.isRunning = false;
     }
-
-    @Override
-    public void run() {
-        try {
-            runSort();
-        } catch (MidiUnavailableException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

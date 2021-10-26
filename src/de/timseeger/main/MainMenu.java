@@ -3,12 +3,12 @@ package de.timseeger.main;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainMenu extends JFrame{
+public class MainMenu extends JFrame {
     public static int WINDOW_WIDTH = 1280;
     public static int WINDOW_HEIGHT = 720;
     public static int THREAD_SLEEP_SPEED = 5;
 
-    public static int accesses,comparisons;
+    public static int accesses, comparisons;
 
     public VisualizeArray visualizeArray;
     public JPanel menuPanel;
@@ -17,7 +17,7 @@ public class MainMenu extends JFrame{
     public JSlider arraySlider, speedSlider;
     public static JLabel SizeOfArray, SpeedOfThread, specificsOfAlgo;
 
-    public MainMenu(){
+    public MainMenu() {
         super("Sorting Algorithm Visualizer");
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
@@ -49,18 +49,20 @@ public class MainMenu extends JFrame{
         speedSlider.setInverted(true);
         speedSlider.setMajorTickSpacing(1);
         speedSlider.setPaintTicks(true);
-        speedSlider.addChangeListener(e -> {if(!VisualizeArray.isRunning)THREAD_SLEEP_SPEED = speedSlider.getValue();});
-        speedSlider.addChangeListener(e ->  specificsOfAlgo.setText(accesses + " accesses, " + comparisons +" comparisons, " + THREAD_SLEEP_SPEED + " ms delay"));
+        speedSlider.addChangeListener(e -> {
+            if (!VisualizeArray.isRunning) THREAD_SLEEP_SPEED = speedSlider.getValue();
+        });
+        speedSlider.addChangeListener(e -> specificsOfAlgo.setText(accesses + " accesses, " + comparisons + " comparisons, " + THREAD_SLEEP_SPEED + " ms delay"));
 
         sortSelect = new JComboBox<>();
         sortSelect.addItem("BubbleSort");
         sortSelect.addItem("QuickSort");
+        sortSelect.addItem("SelectionSort");
 
         startSort = new JButton("Start");
         startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
-        startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
 
-        specificsOfAlgo = new JLabel(accesses + " accesses, " + comparisons +" comparisons, " + THREAD_SLEEP_SPEED + " ms delay");
+        specificsOfAlgo = new JLabel(accesses + " accesses, " + comparisons + " comparisons, " + THREAD_SLEEP_SPEED + " ms delay");
 
         menuPanel.add(SizeOfArray);
         menuPanel.add(arraySlider);
@@ -73,6 +75,16 @@ public class MainMenu extends JFrame{
 
     public static void main(String[] args) {
         new MainMenu();
+    }
+
+    public static void updateAccesses() {
+        accesses++;
+        specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
+    }
+
+    public static void updateComparisons() {
+        comparisons++;
+        specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
     }
 
 }

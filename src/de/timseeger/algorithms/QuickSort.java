@@ -10,30 +10,30 @@ import javax.sound.midi.Synthesizer;
 import static de.timseeger.main.Sound.getMidiConvertRate;
 
 
-public class QuickSort implements Runnable{
+public class QuickSort implements Runnable {
     VisualizeArray visualizeArray;
     int speed;
 
-    public QuickSort(VisualizeArray visualizeArray, int speed){
+    public QuickSort(VisualizeArray visualizeArray, int speed) {
         this.visualizeArray = visualizeArray;
         this.speed = speed;
     }
 
-    private void runSort() {
+    private void runSort() throws InterruptedException {
         try {
             MainMenu.accesses = 0;
             MainMenu.comparisons = 0;
             Synthesizer synth = MidiSystem.getSynthesizer();
             synth.open();
             Sound.getChannels(synth);
-        }catch(Exception e){
-            System.out.println(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        quickSort(0, visualizeArray.getLength()-1);
+        quickSort(0, visualizeArray.getLength() - 1);
     }
 
-    private void quickSort(int low, int high) {
-        if(low < high) {
+    private void quickSort(int low, int high) throws InterruptedException {
+        if (low < high) {
             int pivot = findPivot(low, high);
             quickSort(low, pivot - 1);
             quickSort(pivot + 1, high);
@@ -41,41 +41,39 @@ public class QuickSort implements Runnable{
         VisualizeArray.isRunning = false;
     }
 
-    private int findPivot(int low, int high) {
+    private int findPivot(int low, int high) throws InterruptedException {
         VisualizeArray.isRunning = true;
         int pivotVal = visualizeArray.getValue(high);
-        int i = low -1;
+        int i = low - 1;
         double convertMidiRate = getMidiConvertRate(visualizeArray);
-        for(int j = low; j <= high-1;j++){
-            MainMenu.accesses++;
-            MainMenu.specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
-            if(visualizeArray.getValue(j) <= pivotVal){
-                try {
-                    Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), MainMenu.THREAD_SLEEP_SPEED);
-                    MainMenu.comparisons++;
-                    MainMenu.specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
-                    i++;
-                    visualizeArray.swap(i, j);
-                    Thread.sleep(speed);
-            }catch(Exception e){
-                System.out.println(e);
-            }
-            }
-        }
-        try{
-            Thread.sleep(speed);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-        visualizeArray.swap(i+1, high);
 
-        return i+1;
+        for (int j = low; j <= high - 1; j++) {
+            Thread.sleep(speed);
+            MainMenu.updateAccesses();
+            if (visualizeArray.getValue(j) <= pivotVal) {
+                Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
+                MainMenu.updateComparisons();
+                MainMenu.updateAccesses();
+                i++;
+                visualizeArray.swap(i, j);
+                Thread.sleep(speed);
+            }
+        }
+        Thread.sleep(speed);
+        visualizeArray.swap(i + 1, high);
+        MainMenu.updateAccesses();
+
+        return i + 1;
 
     }
 
     @Override
     public void run() {
-        runSort();
+        try {
+            runSort();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -12,14 +12,13 @@ public class Sound {
         channels = synth.getChannels()[0];
     }
 
-    public static void play(int note, int duration) throws InterruptedException
-    {
-        channels.noteOn(note, VOLUME );
+    public static void play(int note, int duration) throws InterruptedException {
+        channels.noteOn(note, VOLUME);
         Thread.sleep(duration);
         channels.noteOff(note);
     }
 
-    public static double getMidiConvertRate(VisualizeArray visualizeArray){
-        return (double) 65/visualizeArray.getLength();
+    public static double getMidiConvertRate(VisualizeArray visualizeArray) {
+        return (double) 65 / visualizeArray.getLength();
     }
 }
