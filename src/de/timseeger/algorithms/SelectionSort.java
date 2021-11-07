@@ -19,15 +19,6 @@ public class SelectionSort implements Runnable {
         this.speed = speed;
     }
 
-    @Override
-    public void run() {
-        try {
-            runSort();
-        } catch (InterruptedException | MidiUnavailableException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void runSort() throws InterruptedException, MidiUnavailableException {
             MainMenu.accesses = 0;
             MainMenu.comparisons = 0;
@@ -37,25 +28,36 @@ public class SelectionSort implements Runnable {
             double convertMidiRate = getMidiConvertRate(visualizeArray);
             int length = visualizeArray.getLength();
 
-            for (int i = 0; i < length - 1; i++) {
+            for (int i = 0; i < length-1; i++) {
                 Thread.sleep(speed);
                 int min = i;
-                MainMenu.updateAccesses();
+                MainMenu.updateAccesses(2);
                 for (int j = i + 1; j < length; j++) {
-                    MainMenu.updateAccesses();
                     Thread.sleep(speed);
+                    MainMenu.updateAccesses(1);
                     if (visualizeArray.getValue(j) < visualizeArray.getValue(min)) {
                         Thread.sleep(speed);
                         MainMenu.updateComparisons();
+                        MainMenu.updateAccesses(2);
                         min = j;
                     }
                 }
                 Thread.sleep(speed);
-                MainMenu.updateAccesses();
                 if (min != i)
+                    MainMenu.updateComparisons();
+                    MainMenu.updateAccesses(3);
                     visualizeArray.swap(min, i);
                 Sound.play((int) (visualizeArray.getValue(min) * convertMidiRate), speed);
             }
         VisualizeArray.isRunning = false;
+    }
+
+    @Override
+    public void run() {
+        try {
+            runSort();
+        } catch (InterruptedException | MidiUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }

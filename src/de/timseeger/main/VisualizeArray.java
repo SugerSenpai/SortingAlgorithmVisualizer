@@ -1,6 +1,7 @@
 package de.timseeger.main;
 
 import de.timseeger.algorithms.BubbleSort;
+import de.timseeger.algorithms.InsertionSort;
 import de.timseeger.algorithms.QuickSort;
 import de.timseeger.algorithms.SelectionSort;
 
@@ -17,7 +18,7 @@ public class VisualizeArray extends JPanel {
     private static int LENGTH = 100;
     private float[] BAR_HEIGHT = new float[LENGTH];
 
-    private int current_index, traversing_index;
+    public static int current_index, traversing_index;
 
     public VisualizeArray() {
         setBackground(Color.BLACK);
@@ -61,8 +62,6 @@ public class VisualizeArray extends JPanel {
         graphics2D.setColor(Color.GREEN);
         bar = new Rectangle2D.Float(traversing_index * BAR_WIDTH, 0, BAR_WIDTH, BAR_HEIGHT[traversing_index]);
         graphics2D.fill(bar);
-        current_index = 0;
-        traversing_index = 0;
     }
 
 
@@ -87,6 +86,13 @@ public class VisualizeArray extends JPanel {
         repaint();
     }
 
+    public void changeArray(int index, int value){
+        current_index = index;
+        randomArray[index] = value;
+        getBarHeight();
+        repaint();
+    }
+
     public static void startSort(String algorithmName, VisualizeArray visualizeArray, int speed) {
         if (!isRunning) {
             switch (algorithmName) {
@@ -102,13 +108,17 @@ public class VisualizeArray extends JPanel {
                     sortingThread = new Thread(new SelectionSort(visualizeArray, speed));
                     isRunning = true;
                 }
+                case ("InsertionSort") -> {
+                    sortingThread = new Thread(new InsertionSort(visualizeArray, speed));
+                    isRunning = true;
+                }
             }
             sortingThread.start();
         }
     }
 
     public int getLength() {
-        return LENGTH;
+        return randomArray.length;
     }
 
     public int getValue(int index) {

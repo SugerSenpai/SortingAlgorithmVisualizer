@@ -31,14 +31,15 @@ public class BubbleSort implements Runnable {
 
             for (int i = 0; i < length - 1; i++) {
                 Thread.sleep(speed);
-                MainMenu.updateAccesses();
+                MainMenu.updateAccesses(1);
                 for (int j = 0; j < length - i - 1; j++) {
                     Thread.sleep(speed);
-                    MainMenu.updateAccesses();
+                    MainMenu.updateAccesses(1);
                     if (visualizeArray.getValue(j) > visualizeArray.getValue(j + 1)) {
                         Thread.sleep(speed);
                         Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
                         visualizeArray.swap(j, j + 1);
+                        MainMenu.updateAccesses(2);
                         MainMenu.updateComparisons();
                     }
                 }

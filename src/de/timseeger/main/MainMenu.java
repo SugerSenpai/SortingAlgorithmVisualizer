@@ -58,6 +58,7 @@ public class MainMenu extends JFrame {
         sortSelect.addItem("BubbleSort");
         sortSelect.addItem("QuickSort");
         sortSelect.addItem("SelectionSort");
+        sortSelect.addItem("InsertionSort");
 
         startSort = new JButton("Start");
         startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
@@ -77,13 +78,14 @@ public class MainMenu extends JFrame {
         new MainMenu();
     }
 
-    public static void updateAccesses() {
-        accesses++;
+    public static void updateAccesses(int amount) {
+        for(int i = 0; i < amount; i++){
+            accesses++;
+        }
         specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
     }
 
     public static void updateComparisons() {
-        accesses++;
         comparisons++;
         specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
     }

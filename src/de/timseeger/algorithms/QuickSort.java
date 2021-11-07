@@ -49,10 +49,11 @@ public class QuickSort implements Runnable {
 
         for (int j = low; j <= high - 1; j++) {
             Thread.sleep(speed);
-            MainMenu.updateAccesses();
+            MainMenu.updateAccesses(2);
             if (visualizeArray.getValue(j) <= pivotVal) {
                 Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
                 MainMenu.updateComparisons();
+                MainMenu.updateAccesses(3);
                 i++;
                 visualizeArray.swap(i, j);
                 Thread.sleep(speed);
@@ -60,7 +61,7 @@ public class QuickSort implements Runnable {
         }
         Thread.sleep(speed);
         visualizeArray.swap(i + 1, high);
-        MainMenu.updateAccesses();
+        MainMenu.updateAccesses(2);
 
         return i + 1;
 
