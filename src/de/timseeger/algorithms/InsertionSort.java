@@ -8,18 +8,20 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Synthesizer;
 
+import static de.timseeger.main.MainMenu.updateAccesses;
+import static de.timseeger.main.MainMenu.updateComparisons;
 import static de.timseeger.main.Sound.getMidiConvertRate;
 
 public class InsertionSort implements Runnable {
     VisualizeArray visualizeArray;
     int speed;
 
-    public InsertionSort(VisualizeArray visualizeArray, int speed){
+    public InsertionSort(VisualizeArray visualizeArray, int speed) {
         this.visualizeArray = visualizeArray;
         this.speed = speed;
     }
 
-    public void runSort() throws InterruptedException, MidiUnavailableException{
+    public void runSort() throws InterruptedException, MidiUnavailableException {
         MainMenu.accesses = 0;
         MainMenu.comparisons = 0;
         Synthesizer synth = MidiSystem.getSynthesizer();
@@ -28,24 +30,23 @@ public class InsertionSort implements Runnable {
         double convertMidiRate = getMidiConvertRate(visualizeArray);
         int length = visualizeArray.getLength();
 
-        for(int i = 0;i < length; i++){
+        for (int i = 0; i < length; i++) {
             Thread.sleep(speed);
+            updateAccesses(1);
             int key = visualizeArray.getValue(i);
-            int j = i-1;
-            MainMenu.updateAccesses(2);
-            while(j >= 0 && visualizeArray.getValue(j) > key){
-                MainMenu.updateComparisons();
-                MainMenu.updateAccesses(3);
+            int j = i - 1;
+            while (j >= 0 && visualizeArray.getValue(j) > key) {
                 Thread.sleep(speed);
-                Sound.play((int) (visualizeArray.getValue(j+1) * convertMidiRate), speed);
-                System.out.println(i);
+                updateAccesses(3);
+                updateComparisons();
+                Sound.play((int) (visualizeArray.getValue(j + 1) * convertMidiRate), speed);
                 VisualizeArray.traversing_index = i;
-                visualizeArray.changeArray(j+1, visualizeArray.getValue(j));
+                visualizeArray.changeArray(j + 1, visualizeArray.getValue(j));
                 j--;
             }
-            MainMenu.updateAccesses(2);
             Thread.sleep(speed);
-            visualizeArray.changeArray(j+1, key);
+            updateAccesses(3);
+            visualizeArray.changeArray(j + 1, key);
         }
         VisualizeArray.isRunning = false;
     }
@@ -53,9 +54,9 @@ public class InsertionSort implements Runnable {
 
     @Override
     public void run() {
-        try{
+        try {
             runSort();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

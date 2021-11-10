@@ -9,13 +9,12 @@ public class MainMenu extends JFrame {
     public static int THREAD_SLEEP_SPEED = 5;
 
     public static int accesses, comparisons;
-
+    public static JLabel SizeOfArray, SpeedOfThread, specificsOfAlgo;
     public VisualizeArray visualizeArray;
     public JPanel menuPanel;
     public JComboBox<String> sortSelect;
     public JButton startSort;
     public JSlider arraySlider, speedSlider;
-    public static JLabel SizeOfArray, SpeedOfThread, specificsOfAlgo;
 
     public MainMenu() {
         super("Sorting Algorithm Visualizer");
@@ -33,6 +32,22 @@ public class MainMenu extends JFrame {
 
         visualizeArray.repaint();
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new MainMenu();
+    }
+
+    public static void updateAccesses(int amount) {
+        for (int i = 0; i < amount; i++) {
+            accesses++;
+        }
+        specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
+    }
+
+    public static void updateComparisons() {
+        comparisons++;
+        specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
     }
 
     private void initializeMenu() {
@@ -72,22 +87,6 @@ public class MainMenu extends JFrame {
         menuPanel.add(sortSelect);
         menuPanel.add(startSort);
         menuPanel.add(specificsOfAlgo);
-    }
-
-    public static void main(String[] args) {
-        new MainMenu();
-    }
-
-    public static void updateAccesses(int amount) {
-        for(int i = 0; i < amount; i++){
-            accesses++;
-        }
-        specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
-    }
-
-    public static void updateComparisons() {
-        comparisons++;
-        specificsOfAlgo.setText(MainMenu.accesses + " accesses, " + MainMenu.comparisons + " comparisons, " + MainMenu.THREAD_SLEEP_SPEED + " ms delay");
     }
 
 }

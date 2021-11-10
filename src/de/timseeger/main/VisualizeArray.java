@@ -13,18 +13,40 @@ import java.util.Random;
 public class VisualizeArray extends JPanel {
     public static Thread sortingThread;
     public static boolean isRunning;
-
-    private int[] randomArray;
-    private static int LENGTH = 100;
-    private float[] BAR_HEIGHT = new float[LENGTH];
-
     public static int current_index, traversing_index;
+    private static int LENGTH = 100;
+    private int[] randomArray;
+    private float[] BAR_HEIGHT = new float[LENGTH];
 
     public VisualizeArray() {
         setBackground(Color.BLACK);
         randomArray = new int[LENGTH];
         randomizeArray(randomArray);
         getBarHeight();
+    }
+
+    public static void startSort(String algorithmName, VisualizeArray visualizeArray, int speed) {
+        if (!isRunning) {
+            switch (algorithmName) {
+                case ("BubbleSort") -> {
+                    sortingThread = new Thread(new BubbleSort(visualizeArray, speed));
+                    isRunning = true;
+                }
+                case ("QuickSort") -> {
+                    sortingThread = new Thread(new QuickSort(visualizeArray, speed));
+                    isRunning = true;
+                }
+                case ("SelectionSort") -> {
+                    sortingThread = new Thread(new SelectionSort(visualizeArray, speed));
+                    isRunning = true;
+                }
+                case ("InsertionSort") -> {
+                    sortingThread = new Thread(new InsertionSort(visualizeArray, speed));
+                    isRunning = true;
+                }
+            }
+            sortingThread.start();
+        }
     }
 
     public void getBarHeight() {
@@ -64,7 +86,6 @@ public class VisualizeArray extends JPanel {
         graphics2D.fill(bar);
     }
 
-
     public void changeArrayLength(int length) {
         if (!isRunning) {
             randomArray = new int[length];
@@ -86,35 +107,11 @@ public class VisualizeArray extends JPanel {
         repaint();
     }
 
-    public void changeArray(int index, int value){
+    public void changeArray(int index, int value) {
         current_index = index;
         randomArray[index] = value;
         getBarHeight();
         repaint();
-    }
-
-    public static void startSort(String algorithmName, VisualizeArray visualizeArray, int speed) {
-        if (!isRunning) {
-            switch (algorithmName) {
-                case ("BubbleSort") -> {
-                    sortingThread = new Thread(new BubbleSort(visualizeArray, speed));
-                    isRunning = true;
-                }
-                case ("QuickSort") -> {
-                    sortingThread = new Thread(new QuickSort(visualizeArray, speed));
-                    isRunning = true;
-                }
-                case ("SelectionSort") -> {
-                    sortingThread = new Thread(new SelectionSort(visualizeArray, speed));
-                    isRunning = true;
-                }
-                case ("InsertionSort") -> {
-                    sortingThread = new Thread(new InsertionSort(visualizeArray, speed));
-                    isRunning = true;
-                }
-            }
-            sortingThread.start();
-        }
     }
 
     public int getLength() {

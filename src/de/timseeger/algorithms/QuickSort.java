@@ -7,6 +7,8 @@ import de.timseeger.main.VisualizeArray;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Synthesizer;
 
+import static de.timseeger.main.MainMenu.updateAccesses;
+import static de.timseeger.main.MainMenu.updateComparisons;
 import static de.timseeger.main.Sound.getMidiConvertRate;
 
 
@@ -29,7 +31,7 @@ public class QuickSort implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        quickSort(0, visualizeArray.getLength() - 1);
+        quickSort(1, visualizeArray.getLength() - 1);
     }
 
     private void quickSort(int low, int high) throws InterruptedException {
@@ -49,22 +51,22 @@ public class QuickSort implements Runnable {
 
         for (int j = low; j <= high - 1; j++) {
             Thread.sleep(speed);
-            MainMenu.updateAccesses(2);
             if (visualizeArray.getValue(j) <= pivotVal) {
-                Sound.play((int) (visualizeArray.getValue(j) * convertMidiRate), speed);
-                MainMenu.updateComparisons();
-                MainMenu.updateAccesses(3);
+                Thread.sleep(speed);
+                updateAccesses(2);
+                Sound.play((int) (visualizeArray.getValue(i) * convertMidiRate), speed);
                 i++;
                 visualizeArray.swap(i, j);
-                Thread.sleep(speed);
             }
+            updateAccesses(1);
+            updateComparisons();
         }
         Thread.sleep(speed);
+        updateAccesses(2);
+        Sound.play((int) (visualizeArray.getValue(i + 1) * convertMidiRate), speed);
         visualizeArray.swap(i + 1, high);
-        MainMenu.updateAccesses(2);
 
         return i + 1;
-
     }
 
     @Override
