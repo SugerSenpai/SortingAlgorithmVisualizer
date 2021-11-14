@@ -41,7 +41,7 @@ public class VisualizeArray extends JPanel {
                     sortingThread = new Thread(new InsertionSort(visualizeArray, speed));
                     isRunning = true;
                 }
-                case("MergeSort") -> {
+                case ("MergeSort") -> {
                     sortingThread = new Thread(new MergeSort(visualizeArray, speed));
                     isRunning = true;
                 }
@@ -95,10 +95,10 @@ public class VisualizeArray extends JPanel {
             BAR_HEIGHT = new float[length];
             getBarHeight();
             repaint();
-            if(traversing_index > randomArray.length){
+            if (traversing_index > randomArray.length) {
                 traversing_index = 0;
             }
-            if(current_index > randomArray.length){
+            if (current_index > randomArray.length) {
                 current_index = 1;
             }
         }
