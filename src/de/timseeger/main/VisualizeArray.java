@@ -1,9 +1,6 @@
 package de.timseeger.main;
 
-import de.timseeger.algorithms.BubbleSort;
-import de.timseeger.algorithms.InsertionSort;
-import de.timseeger.algorithms.QuickSort;
-import de.timseeger.algorithms.SelectionSort;
+import de.timseeger.algorithms.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +39,10 @@ public class VisualizeArray extends JPanel {
                 }
                 case ("InsertionSort") -> {
                     sortingThread = new Thread(new InsertionSort(visualizeArray, speed));
+                    isRunning = true;
+                }
+                case("MergeSort") -> {
+                    sortingThread = new Thread(new MergeSort(visualizeArray, speed));
                     isRunning = true;
                 }
             }
@@ -94,6 +95,12 @@ public class VisualizeArray extends JPanel {
             BAR_HEIGHT = new float[length];
             getBarHeight();
             repaint();
+            if(traversing_index > randomArray.length){
+                traversing_index = 0;
+            }
+            if(current_index > randomArray.length){
+                current_index = 1;
+            }
         }
     }
 
@@ -121,4 +128,5 @@ public class VisualizeArray extends JPanel {
     public int getValue(int index) {
         return randomArray[index];
     }
+
 }

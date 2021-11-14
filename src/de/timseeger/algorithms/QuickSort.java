@@ -31,7 +31,7 @@ public class QuickSort implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        quickSort(1, visualizeArray.getLength() - 1);
+        quickSort(0, visualizeArray.getLength() - 1);
     }
 
     private void quickSort(int low, int high) throws InterruptedException {
@@ -54,8 +54,8 @@ public class QuickSort implements Runnable {
             if (visualizeArray.getValue(j) <= pivotVal) {
                 Thread.sleep(speed);
                 updateAccesses(2);
-                Sound.play((int) (visualizeArray.getValue(i) * convertMidiRate), speed);
                 i++;
+                Sound.play((int) (visualizeArray.getValue(i) * convertMidiRate), speed);
                 visualizeArray.swap(i, j);
             }
             updateAccesses(1);

@@ -74,6 +74,7 @@ public class MainMenu extends JFrame {
         sortSelect.addItem("QuickSort");
         sortSelect.addItem("SelectionSort");
         sortSelect.addItem("InsertionSort");
+        sortSelect.addItem("MergeSort");
 
         startSort = new JButton("Start");
         startSort.addActionListener(e -> VisualizeArray.startSort(String.valueOf(sortSelect.getSelectedItem()), visualizeArray, THREAD_SLEEP_SPEED));
